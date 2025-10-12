@@ -5,17 +5,32 @@ require("mason-lspconfig").setup {
     "gopls",
     "pyright",
     "eslint",
-    "intelephense"
+    "intelephense",
+    "jdtls",
+    "kotlin_language_server"
   }
 }
 
-local lsp = require('lspconfig')
+local lsp = vim.lsp.config
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-lsp.lua_ls.setup {
+vim.lsp.config('lua_ls', {
   capabilities = capabilities
-}
+})
 
-lsp.ts_ls.setup {
+vim.lsp.config('ts_ls', {
   capabilities = capabilities
-}
+})
+
+vim.lsp.config('kotlin_language_server', {
+  capabilities = capabilities,
+  settings = {
+    kotlin = {
+      compiler = {
+        jvm = {
+          target = "21"
+        }
+      }
+    }
+  }
+})
