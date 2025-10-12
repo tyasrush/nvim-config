@@ -1,59 +1,40 @@
 local dap = require('dap')
-
-dap.adapters.kotlin = {
-  type = "executable",
-  command =  os.getenv('HOME') .. "/.local/share/nvim/mason/bin/kotlin-debug-adapter",
-  options = {
-    auto_continue_if_many_stopped = false
-  },
-}
-
-dap.configurations.kotlin = {
-      {
-        type = "kotlin",
-        request = "launch",
-        name = "This file",
-        -- may differ, when in doubt, whatever your project structure may be,
-        -- it has to correspond to the class file located at `build/classes/`
-        -- and of course you have to build before you debug
-        mainClass = function()
-          local root = vim.fs.find("src", { path = vim.uv.cwd(), upward = true, stop = vim.env.HOME })[1] or ""
-          local fname = vim.api.nvim_buf_get_name(0)
-          -- src/main/kotlin/websearch/Main.kt -> websearch.MainKt
-          return fname:gsub(root, ""):gsub("main/kotlin/", ""):gsub(".kt", "Kt"):gsub("/", "."):sub(2, -1)
-        end,
-        projectRoot = "${workspaceFolder}",
-        jsonLogFile = "",
-        enableJsonLogging = false,
-      },
-      {
-        -- Use this for unit tests
-        -- First, run
-        -- ./gradlew --info cleanTest test --debug-jvm
-        -- then attach the debugger to it
-        type = "kotlin",
-        request = "attach",
-        name = "Attach to debugging session",
-        port = 5005,
-        args = {},
-        projectRoot = vim.fn.getcwd,
-        hostName = "localhost",
-        timeout = 2000,
-      },
-    }
-
-vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='red', linehl='', numhl=''})
-
-require('dapui').setup{}
-
-dap.listeners.after.event_initialized["dapui_config"] = function()
-  require('dapui').open()
+local dapui = require('dapui')
+local dapgo = require('dap-go')
+dapui.setup()
+dapgo.setup()
+dap.listeners.before.attach.dapui_config = function()
+ dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+ dapui.open()
 end
 
-dap.listeners.before.event_terminated["dapui_config"] = function()
-  require('dapui').close()
-end
 
-dap.listeners.after.event_exited["dapui_config"] = function()
-  require('dapui').close()
+-- Include the next few lines until the comment only if you feel you need it
+dap.listeners.before.event_terminated.dapui_config = function()
+ dapui.close()
 end
+dap.listeners.before.event_exited.dapui_config = function()
+ dapui.close()
+end
+-- Include everything after this
+
+
+vim.keymap.set('n', '<F5>', function() dap.continue() end)
+vim.keymap.set('n', '<F10>', function() dap.step_over() end)
+vim.keymap.set('n', '<F11>', function() dap.step_into() end)
+vim.keymap.set('n', '<F12>', function() dap.step_out() end)
+vim.keymap.set('n', '<Leader>q', function()
+dap.toggle_breakpoint() end)
+vim.keymap.set('n', '<Leader>Q', function() dap.set_breakpoint()
+end)
+vim.keymap.set('n', '<Leader>lp', function()
+dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
+end)
+vim.keymap.set('n', '<Leader>dr', function() dap.repl.open() end)
+vim.keymap.set('n', '<Leader>dl', function() dap.run_last() end)
+
+vim.keymap.set('n', '<Leader>w', function() dapui.open() end)
+vim.keymap.set('n', '<Leader>W', function() dapui.close() end)
+
