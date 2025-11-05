@@ -10,6 +10,8 @@ return {
       ensure_installed = {
         "stylua",
         "shfmt",
+        "eslint_d",
+        "golangci-lint",
       },
     }
   },
