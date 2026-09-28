@@ -1,0 +1,233 @@
+// VSCode Keybindings for vscode-neovim
+// Copy contents to VSCode keybindings.json
+// Location: ~/.config/Code/User/keybindings.json
+// Or open via: Ctrl+K Ctrl+S -> Click "{}" icon (top right)
+//
+// Note: With vscode-neovim, most Vim keybindings are handled by Neovim itself.
+// These keybindings mirror your Neovim config for VSCode-native commands.
+
+[
+  // ========== Buffers ==========
+  {
+    "key": "shift+h",
+    "command": "workbench.action.previousEditor",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "shift+l",
+    "command": "workbench.action.nextEditor",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "[b",
+    "command": "workbench.action.previousEditor",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "]b",
+    "command": "workbench.action.nextEditor",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.openEditorAtIndex2",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "ctrl+b ctrl+d",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+
+  // ========== Search / Escape ==========
+  {
+    "key": "escape",
+    "command": "closeMarkersNavigation",
+    "when": "editorFocus && markersNavigationVisible"
+  },
+  {
+    "key": "escape",
+    "command": "cancelSelection",
+    "when": "editorHasSelection && textInputFocus"
+  },
+  {
+    "key": "escape",
+    "command": "removeSecondaryCursors",
+    "when": "editorHasMultipleSelections && textInputFocus"
+  },
+
+  // ========== Clear Search Highlight (ctrl+space u r) ==========
+  {
+    "key": "ctrl+space ctrl+u ctrl+r",
+    "command": "actions.findWithSelection",
+    "when": "editorTextFocus"
+  },
+
+  // ========== Search Navigation (n/N) ==========
+  {
+    "key": "n",
+    "command": "editor.action.nextMatchFindAction",
+    "when": "editorFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "N",
+    "command": "editor.action.previousMatchFindAction",
+    "when": "editorFocus && neovim.mode != 'insert'"
+  },
+
+  // ========== Save File ==========
+  {
+    "key": "ctrl+s",
+    "command": "workbench.action.files.save"
+  },
+
+  // ========== Indenting ==========
+  {
+    "key": ">",
+    "command": "editor.action.indentLines",
+    "when": "editorTextFocus && !editorReadonly && editorHasSelection && neovim.mode == 'visual'"
+  },
+  {
+    "key": "<",
+    "command": "editor.action.outdentLines",
+    "when": "editorTextFocus && !editorReadonly && editorHasSelection && neovim.mode == 'visual'"
+  },
+
+  // ========== Commenting ==========
+  {
+    "key": "g c o",
+    "command": "editor.action.insertLineAfter",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "g c O",
+    "command": "editor.action.insertLineBefore",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+
+  // ========== New File (ctrl+space f n) ==========
+  {
+    "key": "ctrl+space ctrl+f ctrl+n",
+    "command": "workbench.action.files.newUntitledFile",
+    "when": "editorTextFocus"
+  },
+
+  // ========== Diagnostics ==========
+  {
+    "key": "]d",
+    "command": "editor.action.marker.nextInFiles",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "[d",
+    "command": "editor.action.marker.prevInFiles",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "]e",
+    "command": "editor.action.marker.nextInFiles",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "[e",
+    "command": "editor.action.marker.prevInFiles",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "]w",
+    "command": "editor.action.marker.nextInFiles",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "[w",
+    "command": "editor.action.marker.prevInFiles",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "]i",
+    "command": "editor.action.marker.nextInFiles",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "[i",
+    "command": "editor.action.marker.prevInFiles",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+
+  // ========== Quit (ctrl+space q q) ==========
+  {
+    "key": "ctrl+space ctrl+q ctrl+q",
+    "command": "workbench.action.quit"
+  },
+
+  // ========== Telescope-like Navigation ==========
+  {
+    "key": "ctrl+space ctrl+g",
+    "command": "workbench.action.quickOpenPreviousEditor",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+space ctrl+m",
+    "command": "workbench.action.gotoSymbol",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+space",
+    "command": "workbench.action.showAllEditors",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "workbench.action.findInFiles",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "workbench.action.quickOpen",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+space ctrl+g ctrl+s",
+    "command": "gitlens.showQuickRepoStatus",
+    "when": "gitlens:enabled && config.gitlens.keymap == 'alternate'"
+  },
+
+  // ========== Terminal Toggle ==========
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "!terminalFocus && neovim.mode != 'insert'"
+  },
+
+  // ========== LSP Navigation ==========
+  {
+    "key": "gi",
+    "command": "editor.action.goToImplementation",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "gd",
+    "command": "editor.action.revealDefinition",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "gr",
+    "command": "editor.action.goToReferences",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "gds",
+    "command": "workbench.action.gotoSymbol",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "gws",
+    "command": "workbench.action.gotoSymbolInWorkspace",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  },
+  {
+    "key": "K",
+    "command": "editor.action.showHover",
+    "when": "editorTextFocus && neovim.mode != 'insert'"
+  }
+]

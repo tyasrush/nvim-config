@@ -1,5 +1,8 @@
 local map = vim.keymap.set
 
+-- Check if running in VSCode with vscode-neovim
+local is_vscode = vim.g.vscode or vim.g.vscode_neovim
+
 -- buffers
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
@@ -72,12 +75,21 @@ map("n", "[i", diagnostic_goto(false, "INFO"), { desc = "Prev Info" })
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
-local builtin = require('telescope.builtin')
-
-
-map("n", "<leader>g", vim.cmd(':b#'))
-map("n", "<leader>m", builtin.marks)
-map("n", "<leader><tab>", builtin.buffers)
-map({ "i", "n", "s" }, "<C-e>", builtin.live_grep)
-map({ "i", "n", "s" }, "<C-p>", builtin.find_files)
-map({ "i", "n", "s" }, "<leader>gs", builtin.git_status)
+-- Telescope / VSCode navigation
+if is_vscode then
+  -- In VSCode, use native VSCode commands instead of Telescope
+  map("n", "<leader>g", "<cmd>workbench.action.quickOpenPreviousEditor<cr>", { desc = "Quick Open Previous Editor" })
+  map("n", "<leader>m", "<cmd>workbench.action.gotoSymbol<cr>", { desc = "Go to Symbol" })
+  map("n", "<leader><tab>", "<cmd>workbench.action.showAllEditors<cr>", { desc = "Show All Editors" })
+  map({ "i", "n", "s" }, "<C-e>", "<cmd>workbench.action.findInFiles<cr>", { desc = "Find in Files" })
+  map({ "i", "n", "s" }, "<C-p>", "<cmd>workbench.action.quickOpen<cr>", { desc = "Quick Open" })
+  map("n", "<leader>gs", "<cmd>gitlens.showQuickRepoStatus<cr>", { desc = "Git Status" })
+else
+  local builtin = require('telescope.builtin')
+  map("n", "<leader>g", vim.cmd(':b#'))
+  map("n", "<leader>m", builtin.marks)
+  map("n", "<leader><tab>", builtin.buffers)
+  map({ "i", "n", "s" }, "<C-e>", builtin.live_grep)
+  map({ "i", "n", "s" }, "<C-p>", builtin.find_files)
+  map({ "i", "n", "s" }, "<leader>gs", builtin.git_status)
+end

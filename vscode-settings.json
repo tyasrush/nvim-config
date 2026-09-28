@@ -1,0 +1,67 @@
+// VSCode Settings for vscode-neovim
+// Copy contents to VSCode settings.json
+// Location: ~/.config/Code/User/settings.json
+// Or open via: Ctrl+, -> Click "{}" icon (top right)
+
+{
+  // === vscode-neovim Extension Settings ===
+  
+  // Path to Neovim executable (adjust if nvim is not in PATH)
+  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  
+  // Start Neovim without loading plugins from init.lua (optional)
+  // Set to true if you experience conflicts with Neovim plugins
+  "vscode-neovim.neovimClean": false,
+  
+  // Composite keys timeout (ms) - for key sequences like 'jj' to escape
+  "vscode-neovim.compositeTimeout": 1000,
+  
+  // Composite escape keys (jj to exit insert mode)
+  "vscode-neovim.compositeKeys": {
+    "jj": {
+      "command": "vscode-neovim.escape"
+    }
+  },
+  
+  // Control keys passthrough in insert mode
+  "vscode-neovim.ctrlKeysForInsertMode": [
+    "ctrl+c",
+    "ctrl+v",
+    "ctrl+a",
+    "ctrl+x",
+    "ctrl+z"
+  ],
+  
+  // Control keys passthrough in normal mode
+  "vscode-neovim.ctrlKeysForNormalMode": [
+    "ctrl+w"
+  ],
+  
+  // Disable Neovim mode for specific file types
+  "vscode-neovim.editorLangIdExclusions": [
+    "markdown",
+    "git-commit",
+    "scminput"
+  ],
+  
+  // === Recommended VSCode Settings ===
+  
+  // Use Neovim for all editing (let vscode-neovim handle it)
+  "vim.useSystemClipboard": true,
+  
+  // Disable VSCode's built-in Vim extension if you have it
+  "vim.enableNeovim": false,
+  
+  // Editor settings that work well with Neovim
+  "editor.cursorBlinking": "solid",
+  "editor.cursorSmoothCaretAnimation": "off",
+  "editor.smoothScrolling": true,
+  
+  // Format on save (handled by conform.nvim in your config)
+  "editor.formatOnSave": false,
+  
+  // Tab settings (matching your Neovim config)
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false
+}
