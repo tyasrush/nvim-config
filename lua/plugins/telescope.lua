@@ -5,9 +5,37 @@ return {
     tag = '0.1.8',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
+      local previewers = require 'telescope.previewers'
+
+      -- nvim-treesitter `main` branch dropped the `parsers.ft_to_lang` /
+      -- `configs` modules that telescope's built-in ts highlighter still calls,
+      -- so drive treesitter ourselves with the core API instead.
+      local function buffer_previewer_maker(filepath, bufnr, opts)
+        opts = opts or {}
+        -- `{ enable = false }` rather than plain `false`: telescope resolves this
+        -- field with a truthiness check, so `false` silently falls back to config.
+        opts.preview = vim.tbl_extend("force", opts.preview or {}, {
+          treesitter = { enable = false },
+        })
+
+        previewers.buffer_previewer_maker(filepath, bufnr, vim.tbl_extend("force", opts, {
+          callback = function(buf)
+            local ft = opts.ft or vim.filetype.match { filename = filepath, buf = buf }
+            local lang = ft and vim.treesitter.language.get_lang(ft)
+            if lang and pcall(vim.treesitter.language.add, lang) then
+              pcall(vim.treesitter.start, buf, lang)
+            end
+            if opts.callback then
+              opts.callback(buf)
+            end
+          end,
+        }))
+      end
+
       require('telescope').setup {
         defaults = {
           dynamic_preview_title = true,
+          buffer_previewer_maker = buffer_previewer_maker,
           path_display = {
             filename_first = {
                 reverse_directories = true

@@ -16,10 +16,18 @@ vim.o.foldmethod = 'syntax'
 vim.o.foldlevelstart = 99
 
 require("config.lazy");
-require("config.keymaps");
-require("config.autocomplete");
-require("config.formatting");
-require("config.lsp");
-require("config.dap");
 
-cmd.colorscheme "catppuccin-mocha"
+-- Load keymaps based on environment
+if vim.g.vscode then
+  -- VSCode Neovim
+  require("config.vscode_keymaps");
+else
+  -- Regular Neovim
+  require("config.keymaps");
+  require("config.autocomplete");
+  require("config.formatting");
+  require("config.lsp");
+  require("config.dap");
+
+  cmd.colorscheme "catppuccin-mocha"
+end
