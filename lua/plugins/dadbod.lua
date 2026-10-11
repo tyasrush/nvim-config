@@ -13,6 +13,7 @@ return {
   },
   init = function()
     -- Your DBUI configuration
+    vim.g.db_ui_execute_on_save = 0
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.db_ui_save_location = vim.fn.expand('~/Workspaces/databases')
     vim.g.db_ui_tmp_query_location = vim.fn.expand('~/Workspaces/databases/tmp')
